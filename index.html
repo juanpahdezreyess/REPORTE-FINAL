@@ -2,14 +2,13 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Reporte Técnico – Fugas de Agua</title>
+<title>Presentación – Sistema de Detección de Fugas de Agua</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Google Fonts -->
+<!-- Fuente -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
 <style>
-/* --- ESTILOS GENERALES --- */
 body {
     margin: 0;
     font-family: "Inter", sans-serif;
@@ -19,84 +18,33 @@ body {
 }
 
 section {
-    padding: 80px 20px;
+    padding: 70px 20px;
     max-width: 900px;
     margin: auto;
+}
+
+.card {
+    background: #1e293b;
+    border-radius: 22px;
+    padding: 40px;
+    margin-bottom: 50px;
+    box-shadow: 0 0 22px rgba(0,0,0,0.25);
 }
 
 h1, h2 {
     font-weight: 800;
 }
 
-/* --- PORTADA TIPO PRESENTACIÓN --- */
-.portada {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 40px;
-    background: url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1500&q=80');
-    background-size: cover;
-    background-position: center;
-    position: relative;
-}
-
-.portada::before {
-    content:"";
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.60);
-    backdrop-filter: blur(3px);
-}
-
-.portada-content {
-    position: relative;
-    z-index: 2;
-}
-
-.portada h1 {
-    font-size: 2.6rem;
-    margin-bottom: 15px;
-}
-
-.portada h3 {
-    font-size: 1.2rem;
-    opacity: 0.9;
-}
-
-.btn {
-    display: inline-block;
-    margin-top: 25px;
-    padding: 14px 36px;
-    background: #38bdf8;
-    color: #0f172a;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 1rem;
-    text-decoration: none;
-    transition: 0.2s;
-}
-
-.btn:hover {
-    background: #0ea5e9;
-    transform: translateY(-3px);
-}
-
-/* --- TARJETAS TIPO PRESENTACIÓN --- */
-.card {
-    background: #1e293b;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    margin-bottom: 60px;
-}
-
 ul, li {
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
-/* FORMULAS */
+p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+/* Formulas */
 .formula {
     background: #0f172a;
     padding: 15px;
@@ -106,11 +54,12 @@ ul, li {
     font-size: 0.95rem;
 }
 
-/* TABLA */
+/* Tabla */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
+    font-size: 1rem;
 }
 
 th, td {
@@ -121,7 +70,6 @@ th, td {
 th {
     background: #0f172a;
 }
-
 td {
     background: #1e293b;
 }
@@ -129,33 +77,31 @@ td {
 </head>
 <body>
 
-<!-- PORTADA -->
-<section class="portada" id="inicio">
-    <div class="portada-content">
-        <h3>Reporte Técnico – Proyecto Final</h3>
-        <h1>Sistema de Detección Inteligente de Fugas de Agua</h1>
-
-        <p style="font-size:1.1rem; margin-top:10px; opacity:0.85;">
+<!-- ENCABEZADO SIMPLE -->
+<section>
+    <div class="card" style="text-align:center;">
+        <h1>Presentación</h1>
+        <h2>Sistema de Detección Inteligente de Fugas de Agua</h2>
+        <p style="opacity:0.85; margin-top:10px;">
             Medición e Instrumentación · 4 de diciembre de 2025
         </p>
-
-        <p style="margin-top:15px; font-weight:500;">
-            Alumnos:<br>
+        <p style="margin-top:10px; font-weight:500;">
             Juan Pablo Jesús Hernández Reyes · Mildred Aleshka · Arturo Yeshua · Jakob
         </p>
-
-        <a href="#introduccion" class="btn">Iniciar presentación ↓</a>
     </div>
 </section>
 
 <!-- 1. INTRODUCCIÓN -->
-<section id="introduccion">
+<section>
     <div class="card">
         <h2>1. Introducción</h2>
         <p>
-            El suministro de agua es un recurso limitado y vital. Las fugas provocan desperdicio,
-            daños materiales y costos elevados. Este proyecto desarrolla un sistema capaz de detectar
-            fugas mediante sensores analógicos y acústicos, aplicando conceptos como:
+            Las fugas de agua representan un problema constante que ocasiona desperdicio,
+            daños materiales y costos elevados.
+        </p>
+        <p>
+            Este proyecto desarrolla un sistema que detecta fugas mediante sensores analógicos
+            y acústicos, aplicando conceptos como:
         </p>
         <ul>
             <li>Sensores analógicos</li>
@@ -167,30 +113,30 @@ td {
 </section>
 
 <!-- 2. TEMA APLICADO -->
-<section id="tema">
+<section>
     <div class="card">
-        <h2>2. Descripción del tema aplicado</h2>
+        <h2>2. Tema aplicado</h2>
         <p><strong>Sensores analógicos:</strong> miden variaciones de presión.</p>
         <p><strong>Instrumentación acústica:</strong> detecta vibraciones internas.</p>
-        <p><strong>Acondicionamiento de señal:</strong> se convierte la señal analógica en digital.</p>
-        <p><strong>Interfaz HMI:</strong> visualización clara de datos en la web.</p>
+        <p><strong>Acondicionamiento de señal:</strong> convierte la señal para lectura digital.</p>
+        <p><strong>Interfaz HMI:</strong> panel web para visualizar datos.</p>
     </div>
 </section>
 
 <!-- 3. DESARROLLO -->
-<section id="desarrollo">
+<section>
     <div class="card">
         <h2>3. Desarrollo del proyecto</h2>
 
         <h3>3.1 Hardware</h3>
         <ul>
             <li><strong>Sensor de presión 174 psi:</strong> mide variaciones internas.</li>
-            <li><strong>Sensor acústico industrial:</strong> registra vibraciones.</li>
-            <li><strong>Arduino:</strong> convierte señales analógicas a digitales.</li>
-            <li><strong>Pantalla integrada:</strong> muestra valores en tiempo real.</li>
+            <li><strong>Sensor acústico industrial:</strong> detecta vibraciones.</li>
+            <li><strong>Arduino:</strong> digitaliza las señales.</li>
+            <li><strong>Pantalla integrada:</strong> muestra datos en tiempo real.</li>
         </ul>
 
-        <h3 style="margin-top:30px;">3.2 Método de medición</h3>
+        <h3 style="margin-top:25px;">3.2 Método de medición</h3>
         <ul>
             <li>Instalación de sensores</li>
             <li>Lectura de voltaje</li>
@@ -202,63 +148,56 @@ td {
 </section>
 
 <!-- 4. RESULTADOS -->
-<section id="resultados">
+<section>
     <div class="card">
         <h2>4. Resultados</h2>
         <ul>
             <li>El sensor acústico detectó vibraciones anormales.</li>
             <li>El sensor de presión mostró caídas bruscas.</li>
-            <li>La interfaz web funcionó en tiempo real.</li>
+            <li>La interfaz funcionó en tiempo real.</li>
             <li>El sistema reaccionó rápidamente.</li>
-            <li>Estructura escalable y flexible.</li>
+            <li>Diseño escalable y flexible.</li>
         </ul>
     </div>
 </section>
 
 <!-- 5. CONCLUSIONES -->
-<section id="conclusiones">
+<section>
     <div class="card">
         <h2>5. Conclusiones</h2>
         <p>
-            Se comprobó que la detección temprana de fugas es posible usando sensores analógicos y
-            acústicos. El sistema permite análisis preciso, monitoreo constante y puede evolucionar
-            hacia IA o automatización.
+            La detección temprana de fugas es posible usando sensores analógicos y acústicos.
+            El sistema permite análisis preciso y monitoreo constante, con potencial para IA y automatización.
         </p>
     </div>
 </section>
 
 <!-- 6. BIBLIOGRAFÍA -->
-<section id="bibliografia">
+<section>
     <div class="card">
         <h2>6. Bibliografía</h2>
         <ul>
-            <li>Manual del sensor de presión 0–174 psi</li>
+            <li>Manual del sensor de presión 174 psi</li>
             <li>Apuntes de Medición e Instrumentación</li>
-            <li>Documentación de Arduino ADC</li>
+            <li>Documentación Arduino ADC</li>
             <li>Manual de instrumentación acústica</li>
         </ul>
     </div>
 </section>
 
 <!-- 7. ANEXOS -->
-<section id="anexos">
+<section>
     <div class="card">
         <h2>7. Anexos: Datasheet y fórmulas</h2>
 
         <h3>Sensor de presión 174 psi</h3>
-        <div class="formula">
-            P = ((Vout - 0.5) / 4) × 174
-        </div>
+        <div class="formula">P = ((Vout - 0.5) / 4) × 174</div>
 
         <h3>Sensor acústico industrial</h3>
-        <div class="formula">
-            VRMS = √( (1/N) * Σ(Vi²) )
-        </div>
+        <div class="formula">VRMS = √((1/N) * Σ(Vi²))</div>
 
-        <h3>Conversión ADC Arduino</h3>
-        <div class="formula">
-            Vout = (ADC / 1023) × 5
-        </div>
+        <h3>Conversión ADC</h3>
+        <div class="formula">Vout = (ADC / 1023) × 5</div>
 
         <h3>Determinación del estado</h3>
         <table>
