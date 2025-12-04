@@ -1,774 +1,290 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Reporte Técnico – Sistema de Detección de Fugas de Agua</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Fuente Google -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Reporte Técnico – Fugas de Agua</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    :root {
-      --bg: #0f172a;
-      --bg-soft: #111827;
-      --card: #111827;
-      --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.1);
-      --text-main: #e5e7eb;
-      --text-muted: #9ca3af;
-      --border-subtle: #1f2937;
-      --chip: #1f2937;
-    }
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+/* --- ESTILOS GENERALES --- */
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: linear-gradient(180deg, #0f172a, #111827);
+    color: white;
+    scroll-behavior: smooth;
+}
 
-    html {
-      scroll-behavior: smooth;
-    }
+section {
+    padding: 80px 20px;
+    max-width: 900px;
+    margin: auto;
+}
 
-    body {
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: radial-gradient(circle at top, #1f2937 0, #020617 55%);
-      color: var(--text-main);
-      min-height: 100vh;
-    }
+h1, h2 {
+    font-weight: 800;
+}
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+/* --- PORTADA TIPO PRESENTACIÓN --- */
+.portada {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    background: url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=1500&q=80');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
 
-    .page {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 1.5rem 1.25rem 3rem;
-    }
+.portada::before {
+    content:"";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.60);
+    backdrop-filter: blur(3px);
+}
 
-    /* NAV SUPERIOR */
-    .top-nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(16px);
-      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.92), rgba(15, 23, 42, 0.75));
-      border-bottom: 1px solid var(--border-subtle);
-      margin: -1.5rem -1.25rem 1.5rem;
-      padding: 0.5rem 1.25rem;
-    }
+.portada-content {
+    position: relative;
+    z-index: 2;
+}
 
-    .top-nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
+.portada h1 {
+    font-size: 2.6rem;
+    margin-bottom: 15px;
+}
 
-    .logo-text {
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
+.portada h3 {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
 
-    .logo-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 16px rgba(56, 189, 248, 0.7);
-    }
+.btn {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 14px 36px;
+    background: #38bdf8;
+    color: #0f172a;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: 0.2s;
+}
 
-    .nav-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      font-size: 0.82rem;
-    }
+.btn:hover {
+    background: #0ea5e9;
+    transform: translateY(-3px);
+}
 
-    .nav-links a {
-      padding: 0.3rem 0.7rem;
-      border-radius: 999px;
-      background-color: transparent;
-      border: 1px solid transparent;
-      color: var(--text-muted);
-      transition: all 0.18s ease;
-      white-space: nowrap;
-    }
+/* --- TARJETAS TIPO PRESENTACIÓN --- */
+.card {
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    margin-bottom: 60px;
+}
 
-    .nav-links a:hover {
-      border-color: var(--accent-soft);
-      background-color: rgba(15, 23, 42, 0.8);
-      color: var(--text-main);
-    }
+ul, li {
+    font-size: 1rem;
+}
 
-    /* PORTADA / HERO */
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 3fr) minmax(0, 2.3fr);
-      gap: 2rem;
-      align-items: center;
-      margin-top: 1rem;
-      padding: 1.8rem 1.5rem;
-      border-radius: 1.5rem;
-      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 55%),
-                  radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.14), transparent 55%),
-                  linear-gradient(135deg, #020617, #020617);
-      border: 1px solid rgba(148, 163, 184, 0.12);
-      box-shadow:
-        0 18px 45px rgba(15, 23, 42, 0.9),
-        inset 0 0 0 1px rgba(15, 23, 42, 0.6);
-    }
+/* FORMULAS */
+.formula {
+    background: #0f172a;
+    padding: 15px;
+    border-radius: 12px;
+    margin: 12px 0;
+    font-family: monospace;
+    font-size: 0.95rem;
+}
 
-    .hero-kicker {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--accent);
-      font-weight: 600;
-      margin-bottom: 0.9rem;
-    }
+/* TABLA */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
 
-    .hero h1 {
-      font-size: clamp(1.9rem, 4vw, 2.4rem);
-      line-height: 1.2;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-    }
+th, td {
+    border: 1px solid #334155;
+    padding: 12px;
+}
 
-    .hero-subtitle {
-      font-size: 1rem;
-      color: var(--text-muted);
-      margin-bottom: 1.2rem;
-    }
+th {
+    background: #0f172a;
+}
 
-    .hero-meta-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 0.8rem;
-      margin-bottom: 1.4rem;
-    }
-
-    .meta-item-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--text-muted);
-    }
-
-    .meta-item-value {
-      font-size: 0.9rem;
-      margin-top: 0.2rem;
-      font-weight: 500;
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      align-items: center;
-    }
-
-    .btn-primary {
-      padding: 0.6rem 1.3rem;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 500;
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      color: #020617;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      box-shadow: 0 12px 30px rgba(56, 189, 248, 0.4);
-      transition: transform 0.14s ease, box-shadow 0.14s ease,
-                  background 0.2s ease;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 38px rgba(56, 189, 248, 0.55);
-      background: linear-gradient(135deg, #0ea5e9, #38bdf8);
-    }
-
-    .btn-secondary {
-      padding: 0.55rem 1.05rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      background: rgba(15, 23, 42, 0.7);
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      cursor: pointer;
-      transition: all 0.18s ease;
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--accent);
-      color: var(--text-main);
-      background: rgba(15, 23, 42, 0.9);
-    }
-
-    .hero-badge {
-      font-size: 0.75rem;
-      padding: 0.35rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      color: var(--text-muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-top: 0.8rem;
-      background: rgba(15, 23, 42, 0.8);
-    }
-
-    .hero-badge-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
-    }
-
-    .hero-visual {
-      border-radius: 1.3rem;
-      border: 1px solid rgba(148, 163, 184, 0.38);
-      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 60%),
-                  radial-gradient(circle at bottom, rgba(59, 130, 246, 0.16), transparent 60%),
-                  #020617;
-      padding: 1.2rem;
-      position: relative;
-      overflow: hidden;
-      min-height: 240px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .sensor-chip {
-      background: rgba(15, 23, 42, 0.9);
-      border-radius: 0.9rem;
-      padding: 0.8rem 0.9rem;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      margin-bottom: 0.7rem;
-    }
-
-    .sensor-chip-title {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 0.3rem;
-    }
-
-    .sensor-chip-main {
-      font-size: 0.95rem;
-      font-weight: 500;
-    }
-
-    .hero-chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-top: 0.4rem;
-    }
-
-    .chip {
-      font-size: 0.75rem;
-      padding: 0.22rem 0.55rem;
-      border-radius: 999px;
-      background-color: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      color: var(--text-muted);
-    }
-
-    .tiny-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 0.25rem;
-    }
-
-    .hero-visual-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.8rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 0.4rem;
-    }
-
-    .hero-pill {
-      padding: 0.35rem 0.7rem;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    /* CONTENIDO PRINCIPAL */
-    .content {
-      margin-top: 2.5rem;
-      background-color: rgba(15, 23, 42, 0.85);
-      border-radius: 1.5rem;
-      border: 1px solid rgba(148, 163, 184, 0.22);
-      padding: 1.8rem 1.6rem 2.2rem;
-      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
-    }
-
-    .section {
-      padding: 1.1rem 0;
-      border-top: 1px solid rgba(31, 41, 55, 0.8);
-    }
-
-    .section:first-of-type {
-      border-top: none;
-      padding-top: 0;
-    }
-
-    .section h2 {
-      font-size: 1.2rem;
-      margin-bottom: 0.4rem;
-      font-weight: 600;
-    }
-
-    .section-subtitle {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
-    }
-
-    p {
-      font-size: 0.94rem;
-      line-height: 1.6;
-      color: var(--text-main);
-      margin-bottom: 0.6rem;
-    }
-
-    ul {
-      padding-left: 1.15rem;
-      margin-bottom: 0.6rem;
-    }
-
-    li {
-      margin-bottom: 0.25rem;
-      font-size: 0.92rem;
-      color: var(--text-main);
-    }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 0.7rem;
-    }
-
-    .tag {
-      font-size: 0.75rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 999px;
-      background-color: var(--chip);
-      color: var(--text-muted);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-    }
-
-    .formula {
-      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 0.9rem;
-      background: rgba(15, 23, 42, 0.95);
-      border-radius: 0.6rem;
-      padding: 0.6rem 0.7rem;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      margin: 0.4rem 0 0.6rem;
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 0.5rem 0 0.8rem;
-      font-size: 0.9rem;
-    }
-
-    th, td {
-      padding: 0.4rem 0.5rem;
-      border: 1px solid rgba(31, 41, 55, 0.9);
-    }
-
-    th {
-      background-color: rgba(15, 23, 42, 0.95);
-      font-weight: 600;
-    }
-
-    td {
-      background-color: rgba(15, 23, 42, 0.8);
-    }
-
-    .footer-note {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 1.2rem;
-      text-align: right;
-    }
-
-    @media (max-width: 840px) {
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-
-    @media (max-width: 640px) {
-      .content {
-        padding: 1.3rem 1.1rem 1.8rem;
-      }
-
-      .hero {
-        padding: 1.4rem 1.1rem;
-      }
-
-      .top-nav {
-        padding-inline: 1rem;
-      }
-
-      .top-nav-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-  </style>
+td {
+    background: #1e293b;
+}
+</style>
 </head>
 <body>
-  <div class="page">
-    <!-- NAV SUPERIOR -->
-    <header class="top-nav">
-      <div class="top-nav-inner">
-        <div class="logo-text">
-          <div class="logo-dot"></div>
-          Reporte Técnico · Medición e Instrumentación
-        </div>
-        <nav class="nav-links">
-          <a href="#intro">Introducción</a>
-          <a href="#tema-aplicado">Tema aplicado</a>
-          <a href="#desarrollo">Desarrollo</a>
-          <a href="#resultados">Resultados</a>
-          <a href="#conclusiones">Conclusiones</a>
-          <a href="#bibliografia">Bibliografía</a>
-          <a href="#anexos">Anexos</a>
-        </nav>
-      </div>
-    </header>
 
-    <!-- PORTADA / HERO -->
-    <section class="hero">
-      <div>
-        <div class="hero-kicker">Reporte técnico – Proyecto final</div>
+<!-- PORTADA -->
+<section class="portada" id="inicio">
+    <div class="portada-content">
+        <h3>Reporte Técnico – Proyecto Final</h3>
         <h1>Sistema de Detección Inteligente de Fugas de Agua</h1>
-        <p class="hero-subtitle">
-          Desarrollo de un sistema de monitoreo basado en sensores analógicos y acústicos,
-          aplicado a la detección temprana de fugas en una tubería.
+
+        <p style="font-size:1.1rem; margin-top:10px; opacity:0.85;">
+            Medición e Instrumentación · 4 de diciembre de 2025
         </p>
 
-        <div class="hero-meta-grid">
-          <div>
-            <div class="meta-item-label">Alumnos</div>
-            <div class="meta-item-value">
-              Juan Pablo Jesús Hernández Reyes<br>
-              Mildred Aleshka<br>
-              Arturo Yeshua<br>
-              Jakob
-            </div>
-          </div>
-          <div>
-            <div class="meta-item-label">Materia</div>
-            <div class="meta-item-value">Medición e Instrumentación</div>
-          </div>
-          <div>
-            <div class="meta-item-label">Fecha</div>
-            <div class="meta-item-value">4 de diciembre de 2025</div>
-          </div>
-        </div>
+        <p style="margin-top:15px; font-weight:500;">
+            Alumnos:<br>
+            Juan Pablo Jesús Hernández Reyes · Mildred Aleshka · Arturo Yeshua · Jakob
+        </p>
 
-        <div class="hero-actions">
-          <a href="#reporte" class="btn-primary">
-            Ver reporte completo
-            <span>↓</span>
-          </a>
-          <a href="#anexos" class="btn-secondary">
-            Ver fórmulas y datasheets
-          </a>
-        </div>
+        <a href="#introduccion" class="btn">Iniciar presentación ↓</a>
+    </div>
+</section>
 
-        <div class="hero-badge">
-          <span class="hero-badge-dot"></span>
-          Proyecto integrador · Sensores · Instrumentación · HMI
-        </div>
-      </div>
-
-      <aside class="hero-visual" aria-label="Resumen del sistema">
-        <div class="sensor-chip">
-          <div class="sensor-chip-title">Sensor de presión · 0–174 psi</div>
-          <div class="sensor-chip-main">Salida 0.5–4.5 V → Presión en psi</div>
-          <div class="hero-chip-row">
-            <span class="chip">ADC 10 bits</span>
-            <span class="chip">Rango lineal</span>
-            <span class="chip">Tiempo respuesta &lt; 1 ms</span>
-          </div>
-        </div>
-
-        <div class="sensor-chip">
-          <div class="sensor-chip-title">Sensor acústico industrial</div>
-          <div class="sensor-chip-main">Detección de vibraciones y microfugas</div>
-          <div class="hero-chip-row">
-            <span class="chip">35–45 kHz</span>
-            <span class="chip">Análisis vibracional</span>
-            <span class="chip">Indicador de turbulencias</span>
-          </div>
-        </div>
-
-        <div>
-          <div class="tiny-label">Esquema lógico</div>
-          <div class="hero-chip-row">
-            <span class="chip">Sensores → Arduino (ADC)</span>
-            <span class="chip">Procesamiento → Web</span>
-            <span class="chip">Estados: Normal / Alerta / Fuga</span>
-          </div>
-        </div>
-
-        <div class="hero-visual-footer">
-          <div>
-            <div class="tiny-label">Objetivo</div>
-            Incrementar la detección temprana de fugas para reducir
-            desperdicio y costos.
-          </div>
-          <div class="hero-pill">
-            <span style="font-size:0.75rem;">●</span>
-            Sistema en estado: Normal
-          </div>
-        </div>
-      </aside>
-    </section>
-
-    <!-- CONTENIDO DEL REPORTE -->
-    <main id="reporte" class="content">
-      <!-- 1. INTRODUCCIÓN -->
-      <section id="intro" class="section">
+<!-- 1. INTRODUCCIÓN -->
+<section id="introduccion">
+    <div class="card">
         <h2>1. Introducción</h2>
         <p>
-          El suministro de agua es un recurso fundamental y limitado. En distintas instalaciones,
-          tanto domésticas como industriales, las fugas representan un problema constante que
-          ocasiona desperdicio, daños materiales y costos elevados.
-        </p>
-        <p>
-          El objetivo de este proyecto fue desarrollar un sistema inteligente capaz de detectar
-          fugas de agua en una tubería mediante el uso de sensores físicos, aplicando conceptos
-          vistos en clase tales como:
+            El suministro de agua es un recurso limitado y vital. Las fugas provocan desperdicio,
+            daños materiales y costos elevados. Este proyecto desarrolla un sistema capaz de detectar
+            fugas mediante sensores analógicos y acústicos, aplicando conceptos como:
         </p>
         <ul>
-          <li>Sensores analógicos</li>
-          <li>Instrumentación acústica</li>
-          <li>Acondicionamiento de señales</li>
-          <li>Medición e instrumentación</li>
-          <li>Interfaz hombre–máquina (HMI)</li>
+            <li>Sensores analógicos</li>
+            <li>Instrumentación acústica</li>
+            <li>Acondicionamiento de señales</li>
+            <li>Interfaz HMI</li>
         </ul>
-        <p>
-          El sistema fue diseñado para generar alertas tempranas mediante el análisis de presión,
-          vibración y comportamiento dinámico del flujo.
-        </p>
-      </section>
+    </div>
+</section>
 
-      <!-- 2. TEMA APLICADO -->
-      <section id="tema-aplicado" class="section">
+<!-- 2. TEMA APLICADO -->
+<section id="tema">
+    <div class="card">
         <h2>2. Descripción del tema aplicado</h2>
-        <p class="section-subtitle">
-          Conceptos del curso de Medición e Instrumentación integrados en el proyecto.
-        </p>
+        <p><strong>Sensores analógicos:</strong> miden variaciones de presión.</p>
+        <p><strong>Instrumentación acústica:</strong> detecta vibraciones internas.</p>
+        <p><strong>Acondicionamiento de señal:</strong> se convierte la señal analógica en digital.</p>
+        <p><strong>Interfaz HMI:</strong> visualización clara de datos en la web.</p>
+    </div>
+</section>
 
-        <div class="tag-row">
-          <span class="tag">Sensores analógicos</span>
-          <span class="tag">Instrumentación acústica</span>
-          <span class="tag">Acondicionamiento de señal</span>
-          <span class="tag">Interfaz HMI</span>
-        </div>
-
-        <p><strong>Sensores analógicos:</strong> se emplearon para medir variaciones continuas de presión dentro de la tubería, convirtiendo cambios físicos en variaciones de voltaje.</p>
-        <p><strong>Instrumentación acústica:</strong> el sensor acústico registra vibraciones internas generadas por turbulencias o microfugas.</p>
-        <p><strong>Acondicionamiento de señal:</strong> las señales provenientes de los sensores se estabilizan y convierten mediante el ADC del microcontrolador.</p>
-        <p><strong>Interfaz HMI:</strong> la información se presenta en una aplicación web que actúa como panel de monitoreo para el usuario.</p>
-      </section>
-
-      <!-- 3. DESARROLLO DEL PROYECTO -->
-      <section id="desarrollo" class="section">
+<!-- 3. DESARROLLO -->
+<section id="desarrollo">
+    <div class="card">
         <h2>3. Desarrollo del proyecto</h2>
-        <p class="section-subtitle">
-          El proyecto se dividió en tres áreas principales: hardware, método de medición e interpretación de datos.
-        </p>
 
-        <h3>3.1 Montaje de hardware</h3>
-        <p><strong>1. Sensor analógico de presión 174 psi</strong></p>
+        <h3>3.1 Hardware</h3>
         <ul>
-          <li>Rango: 0–174 psi</li>
-          <li>Salida: 0.5 V – 4.5 V (lineal)</li>
-          <li>Propósito: detectar variaciones internas de presión</li>
-          <li>Aplicación: fugas, bloqueos o cambios repentinos en el flujo</li>
+            <li><strong>Sensor de presión 174 psi:</strong> mide variaciones internas.</li>
+            <li><strong>Sensor acústico industrial:</strong> registra vibraciones.</li>
+            <li><strong>Arduino:</strong> convierte señales analógicas a digitales.</li>
+            <li><strong>Pantalla integrada:</strong> muestra valores en tiempo real.</li>
         </ul>
 
-        <p><strong>2. Sensor acústico industrial</strong></p>
+        <h3 style="margin-top:30px;">3.2 Método de medición</h3>
         <ul>
-          <li>Detecta vibraciones internas asociadas a microfugas</li>
-          <li>Capta resonancia de golpes de ariete o turbulencia</li>
-          <li>Permite análisis detallado del comportamiento del sistema</li>
+            <li>Instalación de sensores</li>
+            <li>Lectura de voltaje</li>
+            <li>Conversión ADC</li>
+            <li>Interpretación de datos</li>
+            <li>Clasificación del estado</li>
         </ul>
+    </div>
+</section>
 
-        <p><strong>3. Microcontrolador Arduino</strong></p>
-        <ul>
-          <li>Recibe señales analógicas desde los sensores</li>
-          <li>Utiliza su ADC (0–1023) para convertir voltaje a valores digitales</li>
-          <li>Envía datos a la aplicación web para su visualización</li>
-        </ul>
-
-        <p><strong>4. Pantalla integrada</strong></p>
-        <ul>
-          <li>Muestra presión y vibración en tiempo real</li>
-          <li>Sirve como instrumento de diagnóstico inmediato en campo</li>
-        </ul>
-
-        <h3 style="margin-top:0.8rem;">3.2 Método de medición aplicado</h3>
-        <p>El método de medición seguido fue el siguiente:</p>
-        <ol style="padding-left:1.15rem; margin-bottom:0.6rem;">
-          <li>Instalación de los sensores en puntos estratégicos de la tubería.</li>
-          <li>Energización del sistema y estabilización del flujo.</li>
-          <li>Registro de la señal analógica de presión correlacionada con el voltaje.</li>
-          <li>Captura de vibraciones internas mediante el sensor acústico.</li>
-          <li>Digitalización de señales mediante el ADC del microcontrolador.</li>
-          <li>Visualización de valores, gráficos y estado del sistema en la aplicación web.</li>
-          <li>Clasificación de estados: Normal, Alerta y Posible fuga.</li>
-        </ol>
-      </section>
-
-      <!-- 4. RESULTADOS -->
-      <section id="resultados" class="section">
+<!-- 4. RESULTADOS -->
+<section id="resultados">
+    <div class="card">
         <h2>4. Resultados</h2>
-        <p>Durante las pruebas del modelo funcional se obtuvieron los siguientes resultados:</p>
         <ul>
-          <li>El sensor acústico detectó vibraciones anormales incluso ante fugas muy pequeñas.</li>
-          <li>El sensor analógico de presión mostró caídas bruscas al simular fugas en la tubería.</li>
-          <li>La interfaz web mostró los datos en tiempo real de forma clara y ordenada.</li>
-          <li>El sistema reaccionó rápida y eficazmente ante variaciones del flujo.</li>
-          <li>La arquitectura es escalable para agregar inteligencia artificial, actuadores y registros históricos.</li>
+            <li>El sensor acústico detectó vibraciones anormales.</li>
+            <li>El sensor de presión mostró caídas bruscas.</li>
+            <li>La interfaz web funcionó en tiempo real.</li>
+            <li>El sistema reaccionó rápidamente.</li>
+            <li>Estructura escalable y flexible.</li>
         </ul>
-      </section>
+    </div>
+</section>
 
-      <!-- 5. CONCLUSIONES -->
-      <section id="conclusiones" class="section">
+<!-- 5. CONCLUSIONES -->
+<section id="conclusiones">
+    <div class="card">
         <h2>5. Conclusiones</h2>
         <p>
-          Se demostró que la detección temprana de fugas es posible mediante la combinación de sensores
-          analógicos y acústicos. El sistema desarrollado ofrece:
+            Se comprobó que la detección temprana de fugas es posible usando sensores analógicos y
+            acústicos. El sistema permite análisis preciso, monitoreo constante y puede evolucionar
+            hacia IA o automatización.
         </p>
-        <ul>
-          <li>Lecturas precisas en tiempo real</li>
-          <li>Monitoreo continuo del comportamiento del flujo</li>
-          <li>Interpretación intuitiva de datos para el usuario</li>
-          <li>Potencial para ampliaciones tecnológicas futuras</li>
-        </ul>
-        <p>
-          Además, el proyecto permitió aplicar de forma práctica conceptos del curso, fortaleciendo los
-          conocimientos sobre medición, sensores, instrumentación y análisis de señales.
-        </p>
-      </section>
+    </div>
+</section>
 
-      <!-- 6. BIBLIOGRAFÍA -->
-      <section id="bibliografia" class="section">
+<!-- 6. BIBLIOGRAFÍA -->
+<section id="bibliografia">
+    <div class="card">
         <h2>6. Bibliografía</h2>
         <ul>
-          <li>Manual técnico de sensores analógicos de presión.</li>
-          <li>Principios de instrumentación y medición vistos en clase.</li>
-          <li>Documentación de Arduino (ADC y señales analógicas).</li>
-          <li>Manual básico de instrumentación acústica industrial.</li>
+            <li>Manual del sensor de presión 0–174 psi</li>
+            <li>Apuntes de Medición e Instrumentación</li>
+            <li>Documentación de Arduino ADC</li>
+            <li>Manual de instrumentación acústica</li>
         </ul>
-      </section>
+    </div>
+</section>
 
-      <!-- 7. ANEXOS -->
-      <section id="anexos" class="section">
-        <h2>7. Anexos: Datasheet de sensores y fórmulas utilizadas</h2>
-        <p class="section-subtitle">
-          Resumen de especificaciones técnicas y expresiones matemáticas empleadas en el proyecto.
-        </p>
+<!-- 7. ANEXOS -->
+<section id="anexos">
+    <div class="card">
+        <h2>7. Anexos: Datasheet y fórmulas</h2>
 
-        <h3>7.1 Datasheet – Sensor analógico de presión (0–174 psi)</h3>
-        <p><strong>Tipo:</strong> sensor piezorresistivo industrial</p>
-        <p><strong>Rango:</strong> 0–174 psi</p>
-        <p><strong>Salida:</strong> 0.5 V – 4.5 V (lineal)</p>
-        <p><strong>Alimentación:</strong> 5 V DC</p>
-        <p><strong>Fórmula del fabricante (conversión de voltaje a presión):</strong></p>
+        <h3>Sensor de presión 174 psi</h3>
         <div class="formula">
-          P = ((V<sub>out</sub> − 0.5) / 4) × 174
+            P = ((Vout - 0.5) / 4) × 174
         </div>
 
-        <h3 style="margin-top:0.6rem;">7.2 Datasheet – Sensor acústico industrial</h3>
-        <p><strong>Rango de frecuencia:</strong> 35–45 kHz</p>
-        <p><strong>Salida:</strong> señal proporcional a la vibración interna</p>
-        <p><strong>Aplicación:</strong> detección de vibraciones internas por turbulencias o microfugas.</p>
-        <p><strong>Fórmula de análisis RMS (nivel de vibración):</strong></p>
+        <h3>Sensor acústico industrial</h3>
         <div class="formula">
-          V<sub>RMS</sub> = √( (1/N) · Σ(V<sub>i</sub><sup>2</sup>) )
+            VRMS = √( (1/N) * Σ(Vi²) )
         </div>
 
-        <h3 style="margin-top:0.6rem;">7.3 Conversión ADC del Arduino</h3>
-        <p>El Arduino utiliza un conversor analógico-digital de 10 bits (0–1023). La relación con el voltaje es:</p>
+        <h3>Conversión ADC Arduino</h3>
         <div class="formula">
-          V<sub>out</sub> = (ADC / 1023) × 5 V
+            Vout = (ADC / 1023) × 5
         </div>
 
-        <h3 style="margin-top:0.6rem;">7.4 Determinación del estado del sistema</h3>
-        <p>Se definieron criterios de decisión con base en umbrales de presión y vibración:</p>
+        <h3>Determinación del estado</h3>
         <table>
-          <thead>
             <tr>
-              <th>Parámetro</th>
-              <th>Condición</th>
-              <th>Interpretación</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Presión</td>
-              <td>Fuera de ±10% del valor de referencia</td>
-              <td>Anómala · Posible fuga o bloqueo</td>
+                <th>Parámetro</th>
+                <th>Condición</th>
+                <th>Interpretación</th>
             </tr>
             <tr>
-              <td>Vibración RMS</td>
-              <td>Superior al nivel típico de operación</td>
-              <td>Anómala · Microfuga o turbulencia</td>
+                <td>Presión</td>
+                <td>±10% fuera del valor</td>
+                <td>Anómala</td>
             </tr>
             <tr>
-              <td>Presión + Vibración</td>
-              <td>Ambos parámetros anómalos</td>
-              <td><strong>Crítico · Fuga confirmada</strong></td>
+                <td>Vibración</td>
+                <td>RMS alto</td>
+                <td>Microfuga</td>
             </tr>
-          </tbody>
+            <tr>
+                <td>Ambos</td>
+                <td>Anómalos</td>
+                <td><strong>Fuga confirmada</strong></td>
+            </tr>
         </table>
-      </section>
+    </div>
+</section>
 
-      <div class="footer-note">
-        Reporte técnico generado para fines académicos · 4 de diciembre de 2025
-      </div>
-    </main>
-  </div>
 </body>
 </html>
